@@ -457,4 +457,47 @@ int q6(int numerobase, int numerobusca){
     //     }
     // }
 	// return qtdOcorrencias;
+
+    int qtdOcorrencias;
+
+    int tamanhoNum1 = 0;
+    int tamanhoNum2 = 0;
+    int tempNum1 = numerobase;
+    int tempNum2 = numerobusca;
+
+    while (tempNum1 > 0) {
+        tamanhoNum1++;
+        tempNum1 /= 10;
+    }
+    while (tempNum2 > 0) {
+        tamanhoNum2++;
+        tempNum2 /= 10;
+    }
+    
+    int arrayNum1[tamanhoNum1];
+    int arrayNum2[tamanhoNum2];
+
+    for (int i = tamanhoNum1 - 1; i >= 0; i--) {
+        arrayNum1[i] = numerobase % 10;
+        numerobase /= 10;
+    }
+
+
+    for (int i = tamanhoNum2 - 1; i >= 0; i--) {
+        arrayNum2[i] = numerobusca % 10;
+        numerobusca /= 10;
+    }
+    
+    for (int i = 0; i <= tamanhoNum1 - tamanhoNum2; i++) {
+        int j;
+        for (j = 0; j < tamanhoNum2; j++) {
+            if (arrayNum1[i + j] != arrayNum2[j]) {
+                break;
+            }
+        }
+        if (j == tamanhoNum2) {
+            qtdOcorrencias++;
+        }
+    } 
+    return qtdOcorrencias;
 }
