@@ -410,6 +410,46 @@ int q5(int num){
 	// int numInvertido_I = atoi(numInvertido_S);
     
 	// return numInvertido_I;
+
+    int tamanhoNum1 = 0;
+    int tempNum1 = num;
+	int numInvertido[tamanhoNum1];
+
+    while (tempNum1 > 0) {
+        tamanhoNum1++;
+        tempNum1 /= 10;
+    }
+    
+    int arrayNum1[tamanhoNum1];
+
+    for (int i = tamanhoNum1 - 1; i >= 0; i--) {
+        arrayNum1[i] = num % 10;
+        num /= 10;
+    }
+	
+	int j = tamanhoNum1;
+    for (int i = tamanhoNum1 - 1; i >= 0; i--) {
+        numInvertido[j] = num * 10;
+        num *= 10;
+		j--;
+    }
+    
+    // for (int i = 0; i <= tamanhoNum1 - tamanhoNum2; i++) {
+    //     int j;
+    //     for (j = 0; j < tamanhoNum2; j++) {
+    //         if (arrayNum1[i + j] != arrayNum2[j]) {
+    //             break;
+    //         }
+    //     }
+    //     if (j == tamanhoNum2) {
+    //         qtdOcorrencias++;
+    //     }
+    // } 
+
+	// for(int i = 0; i < tamanhoNum1; i++){
+	// 	numInvertido = arrayNum1[i]*10;
+	// }
+    return numInvertido;
 }
 
 /*
