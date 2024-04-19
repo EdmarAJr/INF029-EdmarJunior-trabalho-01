@@ -88,7 +88,6 @@ DataQuebrada quebraData(char data[]){
 	char sAno[5];
 	int i; 
 
-	printf("Data de entrada: %s\n", data);
 	//limpa o array
 	for (int i = 0; i < 5; i++){
 		sDia[i] = 0;
@@ -139,7 +138,8 @@ DataQuebrada quebraData(char data[]){
 	}else {
 		if((atoi(sMes) != 2 
 			|| atoi(sMes) != 4 
-			|| atoi(sMes) != 6 
+			|| atoi(sMes) != 6
+			|| atoi(sMes) != 9 
 			|| atoi(sMes) != 11) 
 			&& (atoi(sDia) > 0 && atoi(sDia) <=31)) {
 			dq.valido = 1; //atribui o valor em dq na propriedade valido
@@ -309,22 +309,30 @@ DiasMesesAnos q2(char datainicial[], char datafinal[])
 
 int q3(char texto[], char c, int isCaseSensitive){
 	int qtdOcorrencias = 0;
-	// char copia[] = strcpy(texto, copia);
+	char copiaTexto[250]; 
+	strcpy(copiaTexto, texto);
+	char copiaC = c;
 
-	// if (!isCaseSensitive){
-	// 	int i = 0;
-	// 	for (; texto[i] != '\0'; i++){ 
-	// 		copia[i] = toupper(copia[i]);
-	// 	}
-	// 	c = toupper(c);
-	// }
-	
-	// for (int i = 0; texto[i] != '\0'; i++){ 
-	// 	if (c == copia[i]) {
-	// 		qtdOcorrencias++;
-	// 	}
-	// }
-	// return qtdOcorrencias;
+	if (!isCaseSensitive){
+		int i = 0;
+		for (; copiaTexto[i] != '\0'; i++){ 
+			copiaTexto[i] = toupper(copiaTexto[i]);
+		}
+		copiaC = toupper(c);
+
+		for (int i = 0; copiaTexto[i] != '\0'; i++){ 
+			if (copiaC == copiaTexto[i]) {
+				qtdOcorrencias++;
+			}
+		}	
+	} else{
+		for (int i = 0; texto[i] != '\0'; i++){ 
+			if (c == texto[i]) {
+				qtdOcorrencias++;
+			}
+		}	
+	}
+	return qtdOcorrencias;
 }
 
 /*
@@ -411,44 +419,14 @@ int q5(int num){
     
 	// return numInvertido_I;
 
-    int tamanhoNum1 = 0;
-    int tempNum1 = num;
-	int numInvertido[tamanhoNum1];
+    int numInvertido = 0;
 
-    while (tempNum1 > 0) {
-        tamanhoNum1++;
-        tempNum1 /= 10;
-    }
-    
-    int arrayNum1[tamanhoNum1];
-
-    for (int i = tamanhoNum1 - 1; i >= 0; i--) {
-        arrayNum1[i] = num % 10;
+    while (num > 0) {
+        int digito = num % 10;
+        numInvertido = numInvertido * 10 + digito;
         num /= 10;
     }
-	
-	int j = tamanhoNum1;
-    for (int i = tamanhoNum1 - 1; i >= 0; i--) {
-        numInvertido[j] = num * 10;
-        num *= 10;
-		j--;
-    }
-    
-    // for (int i = 0; i <= tamanhoNum1 - tamanhoNum2; i++) {
-    //     int j;
-    //     for (j = 0; j < tamanhoNum2; j++) {
-    //         if (arrayNum1[i + j] != arrayNum2[j]) {
-    //             break;
-    //         }
-    //     }
-    //     if (j == tamanhoNum2) {
-    //         qtdOcorrencias++;
-    //     }
-    // } 
 
-	// for(int i = 0; i < tamanhoNum1; i++){
-	// 	numInvertido = arrayNum1[i]*10;
-	// }
     return numInvertido;
 }
 
@@ -498,7 +476,7 @@ int q6(int numerobase, int numerobusca){
     // }
 	// return qtdOcorrencias;
 
-    int qtdOcorrencias;
+    int qtdOcorrencias = 0;
 
     int tamanhoNum1 = 0;
     int tamanhoNum2 = 0;
@@ -521,7 +499,6 @@ int q6(int numerobase, int numerobusca){
         arrayNum1[i] = numerobase % 10;
         numerobase /= 10;
     }
-
 
     for (int i = tamanhoNum2 - 1; i >= 0; i--) {
         arrayNum2[i] = numerobusca % 10;
