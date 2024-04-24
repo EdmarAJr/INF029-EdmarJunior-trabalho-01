@@ -10,10 +10,7 @@
   </a>
   
   <!-- <img alt="License" src="https://img.shields.io/badge/license-MIT-brightgreen"> -->
-  
-   <a href="https://cubos.academy/">
-    <img alt="Feito pela Cubos Academy" src="https://img.shields.io/badge/feito-por%20Cubos%20Academy-D818A5">
-   </a>
+
    
    <a href="https://github.com/cubos-academy/academy-template-readme-projects/stargazers">
     <img alt="Stargazers" src="https://img.shields.io/github/stars/cubos-academy/academy-template-readme-projects?style=social">
