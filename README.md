@@ -107,5 +107,5 @@ As seguintes ferramentas foram usadas na construção do projeto:
 
 <!-- Este projeto esta sobe a licença [MIT](./LICENSE). -->
 
-Feito com ❤️ por Edmar Amorim👋🏽 [Entre em contato!]https://br.linkedin.com/in/edamorim-jr)
+Feito com ❤️ por Edmar Amorim👋🏽 [Entre em contato!](https://br.linkedin.com/in/edamorim-jr)
 
