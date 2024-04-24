@@ -15,16 +15,6 @@
    <a href="https://github.com/cubos-academy/academy-template-readme-projects/stargazers">
     <img alt="Stargazers" src="https://img.shields.io/github/stars/cubos-academy/academy-template-readme-projects?style=social">
   </a>
-  
-   <a href="https://www.twitter.com/cubosacademy/">
-    <img alt="Siga no Twitter" src="https://img.shields.io/twitter/url?url=https%3A%2F%2Fgithub.com%2Fcubos-academy%2Facademy-template-readme-projects">
-  </a>
-  
- 
-</p>
-<h1 align="center">
-    <img alt="Cubos Academy" title="#CubosAcademy" src="assets/Capa GItHub.png" />
-</h1>
 
 <h4 align="center"> 
 	🚧 Trabalho 1 da disciplina INF029 - Laboratório de Programação 🚧
