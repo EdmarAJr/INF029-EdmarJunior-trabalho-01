@@ -1,6 +1,14 @@
-//cd Trabalho_1
-//gcc Edmar_Junior_20232160002_20241.c corretor.c -o trabalho1
-//./trabalho1
+/*
+#### 🎲 Rodando o código
+# Abra a pasta do projeto no shell
+$ cd Trabalho1
+
+# Execute no shell o seguinte comando para compilar
+$ gcc Edmar_Junior_20232160002_20241.c corretor.c -o trabalho1
+
+# Em seguida execute o arquivo compilado
+$ ./trabalho1
+*/
 
 
 // #################################################
@@ -36,14 +44,14 @@ void testQ6();
 
 int main()
 {
-		//testSomar();
-		//testFatorial();
-		//testQ1();
-		//testQ2();
-		//testQ3();
-		//testQ4();
-		//testQ5();
-		//testQ6();
+		testSomar();
+		testFatorial();
+		testQ1();
+		testQ2();
+		testQ3();
+		testQ4();
+		testQ5();
+		testQ6();
 }
 
 void testSomar()
@@ -82,6 +90,10 @@ void testQ1()
 		printf("%d\n", q1(str) == 1);
 		strcpy(str, "29/02/2001");
 		printf("%d\n", q1(str) == 0);
+		strcpy(str,"1/H/2016");
+		printf("%d\n",q1(str) == 0);
+		strcpy(str,"1/11/20");
+		printf("%d\n",q1(str) == 1); 
 }
 
 void testQ2()

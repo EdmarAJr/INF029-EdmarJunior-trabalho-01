@@ -12,10 +12,10 @@
 //  O aluno deve preencher seus dados abaixo, e implementar as questões do trabalho
 
 //  ----- Dados do Aluno -----
-//  Nome:
-//  email:
-//  Matrícula:
-//  Semestre:
+//  Nome:Edmar Amorim dos Santos Junior
+//  email:darkspider360@gmail.com / 20232160002@ifba.edu.br
+//  Matrícula:20232160002
+//  Semestre:2024.1
 
 //  Copyright © 2016 Renato Novais. All rights reserved.
 // Última atualização: 07/05/2021 - 19/08/2016
@@ -26,9 +26,11 @@
 
 #include <stdio.h>
 #include "Edmar_Junior_20232160002_20241.h" // Substitua pelo seu arquivo de header renomeado
-#include <stdlib.h>
-#include <ctype.h>
 #include <string.h>
+#include <stdlib.h>
+#include <locale.h>
+#include <ctype.h>
+#include <wchar.h>
 
 /*
 ## função utilizada para testes  ##
@@ -81,147 +83,61 @@ int teste(int a)
 }
 
 DataQuebrada quebraData(char data[]){
-	//cria um novo struct chamado dq com as propriedades de DataQuebrada
-	DataQuebrada dq; 
+	DataQuebrada dq;
 	char sDia[3];
 	char sMes[3];
 	char sAno[5];
 	int i; 
 
-	//limpa o array
-	for (int i = 0; i < 5; i++){
-		sDia[i] = 0;
-		sMes[i] = 0;
-		sAno[i] = 0;
-	}
-	
-	//neste for copia os valores da string data ate encontrar a primeira barra e sair do for
-	//sDia eh um array e recebe ate 3 valores
-	for (i = 0; data[i] != '/'; i++){ 
+	for (i = 0; data[i] != '/'; i++){
 		sDia[i] = data[i];	
 	}
-
-	// testa se tem 1 ou dois digitos e o dia esta entre 1 e 31
-	if((i == 1 || i == 2) && (atoi(sDia) > 0 && atoi(sDia) <= 31)){
+	if(i == 1 || i == 2){ // testa se tem 1 ou dois digitos
 		sDia[i] = '\0';  // coloca o barra zero no final
-	} else{
-		dq.valido = 0;//atribui o valor em dq
-		return dq;
-	}
+	}else {
+		dq.valido = 0;
+    return dq;
+	}  
+	
 
 	int j = i + 1; //anda 1 cada para pular a barra
 	i = 0;
 
-	//neste for pula valor atualizado de i para 1 casa copia os valores da string data ate encontrar a segunda barra e sair do for
 	for (; data[j] != '/'; j++){
 		sMes[i] = data[j];
 		i++;
 	}
-	
-	int ano_2 = atoi(sAno)+2000;
-	int ano_4 = atoi(sAno);
 
-	// testa se o mes tem 1 ou dois digitos e se esta entre 1 e 12
-	if((i == 1 || i == 2) && (atoi(sMes) > 0 && atoi(sMes) <= 12)){ 
+	if(i == 1 || i == 2){ // testa se tem 1 ou dois digitos
 		sMes[i] = '\0';  // coloca o barra zero no final
-	} else if ((i == 2) && (atoi(sMes) == 2) 
-				&& (((ano_2 %100 == 0) && (ano_2 %400 == 0)) || (ano_2 %100 != 0) && (ano_2 %100%4 == 0))){
-		dq.valido = 1;
-	} else if ((i == 4) && (atoi(sMes) == 2) 
-				&& (((ano_4 %100 == 0) && (ano_4 %400 == 0)) || ((ano_4 %100 != 0) && (ano_4 %100%4 == 0)))){
-			dq.valido = 1;
-	} else if((atoi(sMes) == 4 ||
-			   atoi(sMes) == 6 ||
-			   atoi(sMes) == 9 ||
-			   atoi(sMes) == 11) && atoi(sDia) > 0 && atoi (sDia) <=30){
-		dq.valido = 1;
 	}else {
-		if((atoi(sMes) != 2 
-			|| atoi(sMes) != 4 
-			|| atoi(sMes) != 6
-			|| atoi(sMes) != 9 
-			|| atoi(sMes) != 11) 
-			&& (atoi(sDia) > 0 && atoi(sDia) <=31)) {
-			dq.valido = 1; //atribui o valor em dq na propriedade valido
-		} else{
-			return dq;
-		}
-	}
+		dq.valido = 0;
+    return dq;
+  }
+	
 
 	j = j + 1; //anda 1 cada para pular a barra
 	i = 0;
-
-	//neste for pula valor atualizado de j para 1 casa copia os valores da string data ate encontrar \0 e sair do for
+	
 	for(; data[j] != '\0'; j++){
-		sAno[i] = data[j];
-		i++;
+	 	sAno[i] = data[j];
+	 	i++;
 	}
 
 	if(i == 2 || i == 4){ // testa se tem 2 ou 4 digitos
 		sAno[i] = '\0';  // coloca o barra zero no final
-		int ano = atoi(sAno);
+	}else {
+		dq.valido = 0;
+    return dq;
+  }
 
-			switch (i){
-				case 2: {
-					switch (ano) {
-						case 0: {
-							if(((ano+2000)%400 == 0) && (atoi(sMes) == 2) && (atoi(sDia)> 0 && atoi(sDia) <= 29)){
-								dq.valido = 1;
-							}
-							break;	
-						}
-						default: {
-							if(((ano+2000)%100%4 == 0) && (atoi(sMes) == 2) && (atoi(sDia)> 0 && atoi(sDia) <= 29)){
-								printf("O ano default bi ano 2 digitos: %d\n", ano);
-								dq.valido = 1; 
-							} else {
-								if((ano+2000%100%4 != 0) && (atoi(sMes) == 2) &&  (atoi(sDia) == 29)){
-									printf("ano default nao bi 2 digitos: %d\n",ano);
-									dq.valido = 0;
-								}
-							}
-						}
-					}
-					break;
-				}
-				case 4: {
-					switch (ano%100) {
-						case 0: {
-							if((ano % 400 == 0) && (atoi(sMes) == 2) && (atoi(sDia)> 0 && atoi(sDia) <= 29)){
-								printf("ano 00 eh: %d\n",ano);
-								dq.valido = 1;
-							}
-							break;	
-						}
-						default: {
-							if((ano%100%4 == 0) && (atoi(sMes) == 2) && (atoi(sDia) > 0 && atoi(sDia) <= 29)){
-								printf("ano bi eh: %d\n",ano);
-								dq.valido = 1; 
-							} else {
-								if((ano%100%4 != 0) && (atoi(sMes) == 2) &&  (atoi(sDia) == 29)){
-									printf("ano nao bi eh: %d\n",ano);
-									dq.valido = 0;
-								}
-							}
-						}
-					}
-					break;
-				}	
-				default:{
-					printf("O ano default2: %d\n", ano);
-					dq.valido = 0; 
-				}
-				break;
-		}
-	}
+  dq.iDia = atoi(sDia);
+  dq.iMes = atoi(sMes);
+  dq.iAno = atoi(sAno); 
 
-	dq.iDia = atoi(sDia); //atribui o valor em dq na propriedade sDia
-	dq.iMes = atoi(sMes); //atribui o valor em dq na propriedade sMês
-	dq.iAno = atoi(sAno); //atribui o valor em dq na propriedade sAno
-	// dq.valido = 1;
-	
-	//printf("Ano no struct: %d, valido:%d\n", dq.iAno, dq.valido);
-	return dq;
+	dq.valido = 1;
+    
+  return dq;
 }
 /*
  Q1 = validar data
@@ -238,20 +154,38 @@ DataQuebrada quebraData(char data[]){
  */
 int q1(char data[]){
 	int datavalida;
-	
 	//quebra a string data em strings sDia, sMes, sAno
 	DataQuebrada dataQuebrada = quebraData(data);
 	
 	if (dataQuebrada.valido == 0) {
-		datavalida = 0;	
-	} else{
-		datavalida = 1;
-	}
-
-	if (datavalida)
-		return 1;
-	else
-		return 0;
+    	return 0;
+	} else if((dataQuebrada.iMes == 2) 
+				&& (dataQuebrada.iDia == 29) 
+				&& !(dataQuebrada.iAno % 4 == 0 
+					|| dataQuebrada.iAno % 400 == 0) 
+				&& (dataQuebrada.iAno % 100 != 0)) {
+					return 0;
+	} else if ((dataQuebrada.iMes == 1
+				||dataQuebrada.iMes == 3
+				||dataQuebrada.iMes == 5
+				||dataQuebrada.iMes == 7
+				||dataQuebrada.iMes == 8
+				||dataQuebrada.iMes == 10
+				||dataQuebrada.iMes == 12) 
+			&& (dataQuebrada.iDia < 1 || dataQuebrada.iDia > 31) ){
+				return 0;
+	} else if((dataQuebrada.iMes == 4
+				||dataQuebrada.iMes == 6 
+				||dataQuebrada.iMes == 9
+				||dataQuebrada.iMes == 11) 
+			&& (dataQuebrada.iDia < 1 || dataQuebrada.iDia > 30)){
+			return 0;
+  	} 
+	
+	if(dataQuebrada.iMes < 1 || dataQuebrada.iMes > 12 ){
+    	return 0;
+  	}
+  return 1;
 }
 
 
@@ -272,28 +206,111 @@ int q1(char data[]){
  */
 DiasMesesAnos q2(char datainicial[], char datafinal[])
 {
-
-		//calcule os dados e armazene nas três variáveis a seguir
-		DiasMesesAnos dma;
-
-		if (q1(datainicial) == 0){
-			dma.retorno = 2;
-			return dma;
-		}else if (q1(datafinal) == 0){
-			dma.retorno = 3;
-			return dma;
-		}else{
-			//verifique se a data final não é menor que a data inicial
-
-			//calcule a distancia entre as datas
-
-
-			//se tudo der certo
-			dma.retorno = 1;
-			return dma;
-
-		}
-
+	DataQuebrada dataInicial, dataFinal;
+    //calcule os dados e armazene nas tres variaveis a seguir
+    DiasMesesAnos dma;
+    dma.qtdDias = 0;
+    dma.qtdMeses = 0;
+    dma.qtdAnos = 0;
+    dataInicial = quebraData(datainicial);
+    dataFinal = quebraData(datafinal);
+    
+	int mesesNegativos = 0; //caso a subtracao resulte em um numero negativo
+    int anosNegativos = 0; //caso a subtracao resulte em um numero negativo
+    int meses_com_31_dias[7] = {1,3,5,7,8,10,12};
+	int ano_bissexto_dataInicial = 0;
+	int ano_bissexto_dataFinal = 0;
+	int i = 0;
+    
+    //verifica se os dias ou os meses sao validos
+    if((dataInicial.iDia < 1 || dataInicial.iDia > 31)
+		||(dataInicial.iMes < 1 || dataInicial.iMes > 12)){ 
+        dma.retorno = 2;
+        return dma;
+    } else if((dataFinal.iDia < 1 || dataFinal.iDia > 31)
+				||(dataFinal.iMes < 1 || dataFinal.iMes > 12)){
+        dma.retorno = 3;
+        return dma;
+    } else if(!(dataInicial.iAno % 4 == 0 || dataInicial.iAno % 400 == 0) 
+				&& dataInicial.iDia == 29){
+        dma.retorno = 2;
+        return dma;
+    }else if(dataInicial.iAno%4 == 0 || dataInicial.iAno%400 == 0) {
+		ano_bissexto_dataInicial = 1;
+	} else if(!(dataFinal.iAno%4 == 0 || dataFinal.iAno%400 == 0)
+				&& dataFinal.iDia ==29){
+            dma.retorno = 3;
+            return dma;
+    }else if(dataFinal.iAno%4 == 0 || dataFinal.iAno%400 == 0){
+		ano_bissexto_dataFinal = 1;
+	} 
+    
+    //calculo da diferença de dias
+    if(dataInicial.iDia < dataFinal.iDia){
+        dma.qtdDias = dataFinal.iDia - dataInicial.iDia;
+    } else if(dataInicial.iDia == dataFinal.iDia){
+        dma.qtdDias = 0;
+    } else if(dataInicial.iDia>dataFinal.iDia){
+        for(i = 0; i < 8; i++){
+            if(dataInicial.iMes == meses_com_31_dias[i]){
+                dma.qtdDias = 31 - (dataInicial.iDia - dataFinal.iDia);
+                mesesNegativos--;
+            }
+        }
+            if(dataInicial.iMes == 2 
+				&& (ano_bissexto_dataInicial == 0 && ano_bissexto_dataFinal == 0)){
+                dma.qtdDias = 28 - (dataInicial.iDia - dataFinal.iDia);
+                mesesNegativos--;
+            }
+            else if(dataInicial.iMes == 2 
+					&& (ano_bissexto_dataInicial == 1 || ano_bissexto_dataFinal == 1)){
+                dma.qtdDias = 29 - (dataInicial.iDia - dataFinal.iDia);
+                mesesNegativos--;
+            }
+        if(dma.qtdDias == 0){
+            dma.qtdDias = 30 - (dataInicial.iDia - dataFinal.iDia);
+            mesesNegativos--;
+        }
+        if(ano_bissexto_dataInicial == 1 && ano_bissexto_dataFinal == 0) dma.qtdDias-=1;
+    }
+    
+    //calcula diferença de meses
+    if(dataInicial.iMes < dataFinal.iMes){
+        dma.qtdMeses = dataFinal.iMes - dataInicial.iMes;
+    }
+    if(dataInicial.iMes == dataFinal.iMes){
+        dma.qtdMeses = 0;
+    }
+    if(dataInicial.iMes>dataFinal.iMes){
+        dma.qtdMeses-= 12 - (dataInicial.iMes - dataFinal.iMes);
+        dma.qtdAnos-=1;
+    }
+    
+    //calcula diferença de anos
+    if(dataInicial.iAno < dataFinal.iAno){
+        dma.qtdAnos = dataFinal.iAno - dataInicial.iAno;
+    }
+    if(dataInicial.iAno == dataFinal.iAno){
+        dma.qtdAnos = 0;
+    }
+    if(dataInicial.iAno > dataFinal.iAno){
+        dma.qtdAnos -= dataInicial.iAno - dataFinal.iAno;
+    }
+    
+    //verifica se a data final eh maior do que a inicial
+    if(dma.qtdDias < 0 
+		|| dma.qtdMeses < 0 
+		|| dma.qtdAnos <0){
+        dma.retorno = 4;
+        return dma; 
+    }
+    //verifique se a data final nao eh menor que a data inicial
+      
+      //calcule a distancia entre as datas
+        dma.qtdMeses += mesesNegativos;
+      //se tudo der certo
+      dma.retorno = 1;
+      return dma;
 }
 
 /*
@@ -351,38 +368,78 @@ int q3(char texto[], char c, int isCaseSensitive){
 
  */
 int q4(char strTexto[], char strBusca[], int posicoes[30]){
-	// char textoSplitado[300];
+    // setlocale(LC_ALL, "");
+	// int qtdOcorrencias = 0;
 
-	// for(int i = 0; strTexto[i] != "/0"; i++){
-	// 		if(strTexto[i] != " "){
-	// 			char palavra[30] = strTexto[i];
-	// 			textoSplitado[i] = strcpy(palavra);
+	// wchar_t copia_strTexto[250];
+    // wchar_t copia_strBusca[50];
+
+    // mbstowcs(copia_strTexto, strTexto, 250);
+    // mbstowcs(copia_strBusca, strBusca, 50);
+
+	// int i, j;
+    // // for (i = 0; strTexto[i] != '\0'; i++){
+    // //     if (strTexto[j] != -61) {
+    // //         copia_strTexto[j] = strTexto[i];
+    // //         j++;
+    // //     }
+    // // }
+
+	// int tam_copia_strTexto = wcslen(copia_strTexto);
+	// int tam_copia_strBusca = wcslen(copia_strBusca);
+
+	// 	for (int i = 0; i <= tam_copia_strTexto - tam_copia_strBusca; i++) {
+	// 		int j, k;
+	// 		// Verificando se a substring de tam_strTexto a partir da posição i é igual a tam_strBusca
+	// 		for (j = 0; j < tam_copia_strBusca; j++) {
+	// 			if (strTexto[i + j] != strBusca[j]) {
+	// 				break; // Se os caracteres não coincidirem, sai do loop interno
+	// 			}
 	// 		}
-	// 	}
-	
-	int qtdOcorrencias = -1;
+	// 		if (j == tam_copia_strBusca) {
+	// 			posicoes[qtdOcorrencias * 2] = i+1; // Armazena a posição inicial da palavra
+    //         	posicoes[qtdOcorrencias * 2 + 1] = i + 1 + tam_copia_strBusca - 1; // Armazena a posição final da palavra
+	// 			qtdOcorrencias++; // Se todos os caracteres de tam_numBusca_S foram encontrados, incrementa qtdOcorrencias
+	// 		} 
+    // }
+	// return qtdOcorrencias;
 
-	int tam_strTexto = strlen(strTexto);
-	int tam_strBusca = strlen(strBusca);
 
-	printf("Tamanho do texto: %d\n", tam_strTexto);
-	printf("Tamanho do palavra: %d\n", tam_strBusca);
+	int qtdOcorrencias = 0;
+	int i, j, k = 0;
+	int decrementar = 0;
+	int contadorLetras;
+	int tamanhoBusca = strlen(strBusca); //guarda o tamanho da string
 
-		for (int i = 0; i <= tam_strTexto - tam_strBusca; i++) {
-        int j;
-        // Verificando se a substring de tam_strTexto a partir da posição i é igual a tam_strBusca
-        for (j = 0; j < tam_strBusca; j++) {
-            if (strTexto[i + j] != strBusca[j]) {
-                break; // Se os caracteres não coincidirem, sai do loop interno
+	char copia_strTexto[250];
+    char copia_strBusca[50];
+
+	strncpy(copia_strTexto, strTexto, 250);
+    strncpy(copia_strBusca, strBusca, 50);
+
+    for(i = 0; copia_strTexto[i] !='\0'; i++){
+        j = 0;
+        contadorLetras = 0;
+        
+		if(copia_strTexto[i] <- 61){ 
+			decrementar--;//decrementa quando encontra -61
+        } 
+        if(copia_strTexto[i] == copia_strBusca[j]){
+            for(j = 1; copia_strBusca[j] != '\0'; j++){
+                if(copia_strBusca[j] != copia_strTexto[i + j]){ 
+                    contadorLetras++; //incrementa somente se a palavra buscada foi encontrada 
+                }
+            }
+            if(contadorLetras == 0){
+                posicoes[k] = i + 1 + decrementar; //posicao inicial da palavra encontrada
+                posicoes[k+1] = i + tamanhoBusca + decrementar; //posicao final da palavra encontrada
+                k += 2;
+                qtdOcorrencias++;
+                i += 1;
             }
         }
-        if (j == tam_strBusca) {
-			printf("Ocorrencias: %d\n", qtdOcorrencias);
-            qtdOcorrencias++; // Se todos os caracteres de tam_numBusca_S foram encontrados, incrementa qtdOcorrencias
-		}
     }
-
-	return qtdOcorrencias;
+    return qtdOcorrencias;
 }
 
 /*
