@@ -562,7 +562,7 @@ int q6(int numerobase, int numerobusca){
         numerobusca /= 10;
     }
     
-    for (int i = 0; i <= tamanhoNum1 - tamanhoNum2; i++) {
+    for (int i = 0; i < tamanhoNum1 - tamanhoNum2; i++) {
         int j;
         for (j = 0; j < tamanhoNum2; j++) {
             if (arrayNum1[i + j] != arrayNum2[j]) {
